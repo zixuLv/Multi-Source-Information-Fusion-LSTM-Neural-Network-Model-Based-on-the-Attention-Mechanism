@@ -71,7 +71,7 @@ Reproducibility_package/<br>
 │ ├── ML/  # Traditional machine learning models<br>
 │ ├── train/  # Deep learning training module (training scripts)<br>
 │ ├── test/  # Testing scripts and independent experiment validation<br>
-│ └── README.md/  # Project documentation<br>
+│ └── README-improved LSTM model/  # Project documentation<br>
 │<br>
 ├── 2 Time series model/<br>
 │ ├── code/  # Python implementation<br>
