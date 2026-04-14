@@ -1,7 +1,0 @@
-SupportVectorMachine预测正确的数量是457，准确率是0.914
-RandomForest预测正确的数量是500，准确率是1.0
-DecisionTree预测正确的数量是500，准确率是1.0
-Multi_LayerPerceptron预测正确的数量是500，准确率是1.0
-KNN预测正确的数量是337，准确率是0.674
-GBDT预测正确的数量是500，准确率是1.0
-Ada预测正确的数量是430，准确率是0.86
