@@ -61,21 +61,21 @@ All data processing pipelines, including cleaning, transformation, and feature e
 
 Reproducibility_package/<br>
 ├── Results/<br>
-│ ├── Tables/ # Statistical tables from the paper<br>
-│ └── Figures/ # All visualizations (JPG format)<br>
+│ ├── Tables/  # Statistical tables from the paper<br>
+│ └── Figures/  # All visualizations (JPG format)<br>
 │<br>
 └── Data&Model/<br>
 ├── 1 The improved LSTM model/<br>
-│ ├── ablation_experiment/ # Ablation study experiments<br>
-│ ├── Backtesting system/ # # Backtesting module (strategy validation & performance evaluation)<br>
-│ ├── ML/ # Traditional machine learning models<br>
-│ ├── train/ # Deep learning training module (training scripts)<br>
-│ ├── test/ # Testing scripts and independent experiment validation<br>
-│ └── README.md/ # Project documentation<br>
+│ ├── ablation_experiment/  # Ablation study experiments<br>
+│ ├── Backtesting system/  # Backtesting module (strategy validation & performance evaluation)<br>
+│ ├── ML/  # Traditional machine learning models<br>
+│ ├── train/  # Deep learning training module (training scripts)<br>
+│ ├── test/  # Testing scripts and independent experiment validation<br>
+│ └── README.md/  # Project documentation<br>
 │<br>
 ├── 2 Time series model/<br>
-│ ├── code/ # Python implementation<br>
-│ ├── rawdata/ # Source datasets<br>
+│ ├── code/  # Python implementation<br>
+│ ├── rawdata/  # Source datasets<br>
 │ └── Readme-time series model.txt<br>
 │<br>
 └── 3 Asset pricing model/<br>
@@ -99,302 +99,324 @@ To regenerate our research results:
 
 The Data directory houses the research infrastructure organized by methodological approach:
 
-### 1 The improved LSTM model
+# 1 The improved LSTM model
 
-Module Description
-#### Train/
+## Module Description
+
+### Train/
 
 This module implements the complete deep learning training pipeline and supports full reproduction of experiments based on the provided dataset.
 
 ---
 
-##### Contents
+#### Contents
 
-- **Improved LSTM model definition**: `model/lstm.py`  
-- **Main training script**: `main.py`  
-- **Utility functions**: `utils.py` (shared across the project)  
-- **Global configuration file**: `config.py` (for parameter settings and data path configuration)  
-- **Model checkpoint saving**: `.ckpt` files are automatically generated during training  
+- **Improved LSTM model definition**: `model/lstm.py`
+- **Main training script**: `main.py`
+- **Utility functions**: `utils.py`   (shared across the project)
+- **Global configuration file**: `config.py`   (for parameter settings and data path configuration)
+- **Model checkpoint saving**: `.ckpt`   (files are automatically generated during training)
 
 ---
 
-##### Data Source
+#### Data Source
 
-The dataset used in this project is included in the repository. It consists of multi-source Bitcoin (BTC) factor features derived from different categories of information. The dataset is located at:
-
-```
+The dataset used in this project is included in the repository. It consists of multi-source Bitcoin (BTC) factor features derived from different categories of information. The dataset is located at: <br>
 train/dataset/dataset
-```
 
 Specifically:
-
-- `train/data/suoyin.xls` serves as the index file, used to organize and locate different feature data  
-
+- `train/data/suoyin.xls` serves as the index file, used to organize and locate different feature data
 The data can be directly used for model training and evaluation.
-
 Unless otherwise specified, **no additional data download is required**.
 
 ---
 
-##### Usage
+#### Usage
 
 Run the following command to start training:
-
 ```bash
 python main.py
 ```
-
 The program will automatically perform the following steps:
-
-- Data loading  
-- Model initialization  
-- Model training and validation  
-- Saving model checkpoints and results  
+- Data loading
+- Model initialization
+- Model training and validation
+- Saving model checkpoints and results
 
 ---
 
-##### Output Description
+#### Output Description
 
-- Key training results can be viewed in the **command-line output**  
-- Model checkpoint files (`.ckpt`) will be automatically saved in:
-
-```
+- Key training results can be viewed in the **command-line output** <br>
+- Model checkpoint files (`.ckpt`) will be automatically saved in: <br>
+```bash
 train/ckpt
 ```
-
 ---
 
-##### Dataset Split Configuration
+#### Dataset Split Configuration
 
 The dataset is split based on time periods, controlled by the `Group` parameter in `config.py`:
+- **Group1** — baseline
+- **Group2** — '17-3-3_17-9-3'
+- **Group3** — '17-9-4_18-3-4'
+- **Group4** — '19-7-29_20-1-29'
+- **Group5** — '20-1-30_20-7-30'
+- **Group6** — '21-8-24_22-2-23'
+- **Group7** — '22-2-24_22-8-24'
 
-- **Group1** — baseline  
-- **Group2** — '17-3-3_17-9-3'  
-- **Group3** — '17-9-4_18-3-4'  
-- **Group4** — '19-7-29_20-1-29'  
-- **Group5** — '20-1-30_20-7-30'  
-- **Group6** — '21-8-24_22-2-23'  
-- **Group7** — '22-2-24_22-8-24'  
-
-#### test/
+### test/
 
 This module is used for model evaluation, result analysis, and trading strategy generation. It supports the reproduction of the main experimental results reported in the paper.
 
 ---
 
-##### Contents
+#### Contents
 
-- **Prediction validation**: Evaluate model prediction results  
-- **Performance metrics computation**: Calculate key metrics such as accuracy  
-- **Confusion matrix visualization**: Visualize classification performance  
-- **Trading strategy generation**: Generate trading signals based on predictions  
+- **Prediction validation**: Evaluate model prediction results
+- **Performance metrics computation**: Calculate key metrics such as accuracy
+- **Confusion matrix visualization**: Visualize classification performance
+- **Trading strategy generation**: Generate trading signals based on predictions
 
 ---
 
-##### Data Description
+#### Data Description
 
-The testing data shares the same source as the training data, consisting of multi-source Bitcoin (BTC) factor features.  
+The testing data shares the same source as the training data, consisting of multi-source Bitcoin (BTC) factor features.
 The data loading and preprocessing pipeline is consistent with the training stage and is controlled by `config.py`.
 
 ---
 
-##### Usage
+#### Usage
 
 To reproduce the main experimental results, run the scripts in the following order:
 
 ---
 
-###### Step 1: Model Testing
-
+##### Step 1: Model Testing
 ```bash
 python test.py
 ```
 The program will automatically:
+- Iterate over all Group configurations (time-based splits)
+- Split the dataset according to each Group
+- Load the corresponding model or perform training-based evaluation
+- Compute prediction results and performance metrics
+- Save evaluation results and visualizations
 
-Iterate over all Group configurations (time-based splits)
-Split the dataset according to each Group
-Load the corresponding model or perform training-based evaluation
-Compute prediction results and performance metrics
-Save evaluation results and visualizations
-
-Output Structure
+###### Output Structure
 
 Each Group will generate a separate result directory:
-test_results/
- ├── Group1/
- │   ├── test_results.csv        # Predictions (true labels vs predicted labels)
- │   ├── test_metrics.csv        # Performance metrics (e.g., accuracy)
- │   ├── confusion_matrix.png    # Confusion matrix visualization
- │
- ├── Group2/
- │   └── ...
-Explanation:
+test_results/<br>
+ ├── Group1/<br>
+ │   ├── test_results.csv        # Predictions (true labels vs predicted labels)<br>
+ │   ├── test_metrics.csv        # Performance metrics (e.g., accuracy)<br>
+ │   ├── confusion_matrix.png    # Confusion matrix visualization<br>
+ │<br>
+ ├── Group2/<br>
+ │   └── ...<br>
 
-test_metrics.csv: stores key evaluation metrics（Main experimental results）
-confusion_matrix.png: visualization of classification results（（Main experimental results））
-test_results.csv: detailed prediction results and corresponding thresholds
+###### Explanation:
 
-###### Step 2: Strategy Generation
+- `test_metrics.csv`: stores key evaluation metrics (Main experimental results)
+- `confusion_matrix.png`: visualization of classification results (Main experimental results)
+- `test_results.csv`: detailed prediction results and corresponding thresholds
+
+---
+
+##### Step 2: Strategy Generation
 ```bash
 python strategy.py
 ```
 The program will automatically:
+- Iterate over test results for all Groups
+- Generate trading signals based on test_results.csv
+- Save the corresponding trading strategy outputs
 
-Iterate over test results for all Groups
-Generate trading signals based on test_results.csv
-Save the corresponding trading strategy outputs
-
-Strategy Output Example:
+###### Strategy Output Example:
+```bash
 test/output_strategy/
  └── BTC_the_up_down_Group1_threshold_0.5.txt
+```
  
-Parameter Description (Important)
-threshold: controls the decision boundary for predicting up/down movements (default: 0.5)
-This parameter can be modified in the main() function of strategy.py to generate different trading strategies
+###### Parameter Description (Important)
 
+- `threshold`: controls the decision boundary for predicting up/down movements (default: 0.5)
+- This parameter can be modified in the main() function of strategy.py to generate different trading strategies
 
+---
 
-#### Backtesting system/
+### Backtesting system/
 
 This module implements a quantitative backtesting framework for evaluating trading strategies generated by the model.
 
 ---
 
-##### Functions
+#### Functions
 
-- **Strategy evaluation**: Evaluate trading strategies generated by the model  
-- **Return calculation**: Compute returns and cumulative return curves  
-- **Performance metrics**: Calculate key financial indicators, including:  
-  - Maximum Drawdown  
-  - Sharpe Ratio  
-- **Visualization**: Generate performance plots for strategy analysis  
+- **Strategy evaluation**: Evaluate trading strategies generated by the model
+- **Return calculation**: Compute returns and cumulative return curves
+- **Performance metrics**: Calculate key financial indicators, including:
+  - Maximum Drawdown
+  - Sharpe Ratio
+- **Visualization**: Generate performance plots for strategy analysis
 
 ---
 
-##### Input Data Description
+#### Input Data Description
 
-###### 1. Strategy Data
+##### 1. Strategy Data
 
 Generated trading strategies should be placed in the following directory:
-
+```bash
 Backtesting system/output_strategy/
-
+```
 Example file:
+```bash
 BTC_the_up_down_Group1_threshold_0.5.txt
+```
 
-###### 2. Market Price Data
+##### 2. Market Price Data
 
-Historical BTC price data is located at:
+Historical BTC price data is located at:<br>
+```bash
 Backtesting system/data/btc.xls
+```
+---
 
-##### Usage
+#### Usage
 
 Run the following command to perform backtesting:
-
 ```bash
 python backtest.py
 ```
 ###### Backtesting Modes
-Default Mode (No Transaction Cost)
-The script runs backtesting without transaction fees by default.
-With Transaction Cost
-To include transaction fees:
-Enable trade_loop_back1()
-Comment out trade_loop_back2()
-(Typically around line ~301 in backtest.py)
 
-Output：
-1. Backtesting Results (Main Experimental Results)
+- **Default Mode (No Transaction Cost)**: The script runs backtesting without transaction fees by default.
+- **With Transaction Cost**: To include transaction fees:
+  - Enable trade_loop_back1()
+  - Comment out trade_loop_back2()
+  - (Typically around line ~301 in backtest.py)
+
+---
+
+#### Output
+
+1. **Backtesting Results (Main Experimental Results)** 
+```bash
 results/backtest_results.csv
+```
 
-2. Return Curve Visualization (Main Experimental Results)
+2. **Return Curve Visualization (Main Experimental Results)** 
+```bash
 results/BTC_the_up_down_Group1_threshold_0.5.png
+```
+---
 
+### ablation_experiment/
 
-#### ablation_experiment/
 This directory contains the code and experimental results for the Ablation Study.
 
 In this project, four different BTC factor feature sets are constructed, each corresponding to different categories of information sources.
 
 The ablation experiments are conducted as follows:
+- Train the model using only one group of factors at a time
+- Keep the model architecture and training hyperparameters unchanged
+- Compare the predictive performance across different factor groups
 
-Train the model using only one group of factors at a time
+---
 
-Keep the model architecture and training hyperparameters unchanged
-
-Compare the predictive performance across different factor groups
-
-How to Switch Factor Groups
+#### How to Switch Factor Groups
 
 To switch between different factor combinations, modify the following file:
+```bash
 model/lstm.py
+```
 Specifically, locate:
 self.lstm = nn.LSTM(
     input_size=canshu['input_size_1'],
 )
-Parameters to Modify
+###### Parameters to Modify
 
-input_size_1
-input_size_2
-input_size_3
-input_size_4
+- `input_size_1`
+- `input_size_2`
+- `input_size_3`
+- `input_size_4`
+
 These parameters correspond to the feature dimensions of the four BTC factor groups.
 
-### Usage
+---
 
+#### Usage
 ```bash
 python main.py
 ```
-Output：
+---
 
-- **Accuracy** is obtained directly from the command-line output  
+#### Output
 
-- **Confusion matrix** is saved at: 
+- **Accuracy** is obtained directly from the command-line output
+- **Confusion matrix** is saved at:
+```bash
 ablation experiment/baseline/best_confusion_matrix 
-
-- **Detailed prediction results (up/down)** are stored in: 
+```
+- **Detailed prediction results (up/down)** are stored in:
+```bash
 ablation experiment/baseline/best_test_results.xlsx 
+```
 
-#### ML/
+---
+
+### ML/
 
 This module reproduces the experimental results using traditional machine learning methods.
 
 ---
 
-##### Usage
+#### Usage
 
 Navigate to the following directory:
+```bash
 final_code/ML/ml/
-
+```
 Run the main script:
-
 ```bash
 python main.py
 ```
-Output
+---
+
+#### Output
+
 Accuracy statistics are saved in:
+```bash
 final_code/ML/ml/TEST_result.txt
+```
+---
 
-### Recommendation: To reproduce the experimental results in this paper, please follow the steps below:
+## Recommendation: 
+### To reproduce the experimental results in this paper, please follow the steps below:
+1. Run `python test.py` in the test directory to obtain model prediction results and related evaluation metrics;
+2. Run `python strategy.py` to enter the strategy generation stage, where two types of strategies (default threshold and 0.6 threshold) are generated for each of the seven time groups;
+3. In the backtesting stage, it is recommended to first perform backtesting without transaction costs, and then enable the transaction cost mode for comparative analysis;
+### The resulting return curves and performance metrics constitute the core experimental results of this study.
 
-Run python test.py in the test directory to obtain model prediction results and related evaluation metrics;
-Run python strategy.py to enter the strategy generation stage, where two types of strategies (default threshold and 0.6 threshold) are generated for each of the seven time groups;
-In the backtesting stage, it is recommended to first perform backtesting without transaction costs, and then enable the transaction cost mode for comparative analysis;
+---
 
-The resulting return curves and performance metrics constitute the core experimental results of this study.
+# 2 Time series model
 
-##### 2 Time series model
+- `code/`: Python scripts implementing the time series model
+- `rawdata/`: Source datasets required for training and evaluating the time series model
 
-- code/: Python scripts implementing the time series model
-- rawdata/: Source datasets required for training and evaluating the time series model
+---
 
-##### 3 Asset pricing model
+# 3 Asset pricing model
 
-- code/: Stata do-files implementing the asset pricing model
-- rawdata/: Source datasets for data processing, integration, and model estimation
+- `code/`: Stata do-files implementing the asset pricing model
+- `rawdata/`: Source datasets for data processing, integration, and model estimation
 
-## 📌 Data Usage Notice
+---
 
+# 📌 Data Usage Notice
 > ✅ All datasets necessary to replicate the results in this paper are included within the replication kit.
 
 **Data Accessibility:**
@@ -402,7 +424,6 @@ The resulting return curves and performance metrics constitute the core experime
 - 🔓 No specific access restrictions
 
 **Important Reminder:**
-
 Users should be mindful of the **terms of use** associated with each platform, which typically govern:
 - Commercial use
 - Redistribution
