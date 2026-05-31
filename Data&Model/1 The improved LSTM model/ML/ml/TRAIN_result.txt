@@ -1,0 +1,7 @@
+SupportVectorMachine correct predictions: 457, accuracy: 0.914
+RandomForest correct predictions: 500, accuracy: 1.0
+DecisionTree correct predictions: 500, accuracy: 1.0
+Multi_LayerPerceptron correct predictions: 500, accuracy: 1.0
+KNN correct predictions: 337, accuracy: 0.674
+GBDT correct predictions: 500, accuracy: 1.0
+Ada correct predictions: 476, accuracy: 0.952
